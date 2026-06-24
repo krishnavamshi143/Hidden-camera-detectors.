@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>SentryEye - Hidden Camera Detector & Scanner</title>
+  <!-- Google Fonts for futuristic, technical style -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  <!-- Main Container to mock a mobile phone shell on desktop and fit perfectly on mobile devices -->
+  <div class="app-container">
+    
+    <!-- HEADER BAR -->
+    <header class="app-header">
+      <div class="brand">
+        <svg class="brand-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <circle cx="12" cy="11" r="3"/>
+          <circle cx="12" cy="11" r="1"/>
+        </svg>
+        <span class="brand-name">SENTRY<span>EYE</span></span>
+      </div>
+      <div class="privacy-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+        <span>Local AI</span>
+      </div>
+    </header>
+
+    <!-- MAIN VIEWPORT FOR SCREENS -->
+    <main class="app-main">
+
+      <!-- VIEW 1: HOME/WELCOME -->
+      <section id="view-home" class="app-view active">
+        <div class="hero-section">
+          <div class="radar-container">
+            <div class="radar-circle circle-1"></div>
+            <div class="radar-circle circle-2"></div>
+            <div class="radar-circle circle-3"></div>
+            <div class="radar-sweep"></div>
+            <div class="radar-core">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="pulsing-eye">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3" fill="var(--color-accent)"/>
+              </svg>
+            </div>
+          </div>
+          <h1 class="hero-title">Scan. Detect. Secure.</h1>
+          <p class="hero-subtitle">Protect your privacy in hotels, Airbnb, and changing rooms using on-device physical lens reflection and shape scanners.</p>
+        </div>
+
+        <div class="features-list">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </div>
+            <div class="feature-info">
+              <h3>Optics Scanning</h3>
+              <p>Highlights lens curves and glint reflections utilizing optimized Sobel edge filters.</p>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+            </div>
+            <div class="feature-info">
+              <h3>IR Anomaly Detection</h3>
+              <p>Amplifies high-frequency color wavelengths often emitted by secret infrared LEDs.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="action-footer">
+          <button id="btn-start-sweep" class="btn btn-primary btn-glow">
+            <span>START ROOM SWEEP</span>
+            <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </button>
+        </div>
+      </section>
+
+      <!-- VIEW 2: STEP-BY-STEP GUIDE -->
+      <section id="view-guide" class="app-view">
+        <div class="guide-header">
+          <div class="step-indicator">
+            <span class="step-num">Step <span id="guide-current-step">1</span> of 4</span>
+            <div class="step-dots">
+              <div class="dot active"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+            </div>
+          </div>
+          <h2 id="guide-title" class="guide-title">Scan Room Corners</h2>
+          <p id="guide-desc" class="guide-desc">Hidden cameras are frequently placed high in corners to maximize field of view. Check joints where walls meet the ceiling.</p>
+        </div>
+
+        <div class="guide-visual-container">
+          <!-- Guided illustrations dynamic per step -->
+          <div class="illustration-box" id="guide-illustration">
+            <!-- Simulated layout of corner -->
+            <div class="room-wireframe corner-wireframe">
+              <div class="grid-line wall-left"></div>
+              <div class="grid-line wall-right"></div>
+              <div class="grid-line ceiling"></div>
+              <div class="target-marker pulse" style="top: 25%; left: 50%;"></div>
+            </div>
+          </div>
+          <div class="safety-tips-box">
+            <h4><span class="tip-sparkle">✦</span> Scan Strategy</h4>
+            <ul id="guide-tips">
+              <li>Hold your phone vertically and scan slowly.</li>
+              <li>Look specifically at corners, cracks, and vents.</li>
+              <li>Keep distance within 1-2 meters.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="guide-footer">
+          <button id="btn-prev-step" class="btn btn-secondary">BACK</button>
+          <button id="btn-launch-scanner" class="btn btn-primary">
+            <span>LAUNCH CAMERA</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+              <circle cx="12" cy="13" r="4"/>
+            </svg>
+          </button>
+        </div>
+      </section>
+
+      <!-- VIEW 3: LIVE SCANNER -->
+      <section id="view-scanner" class="app-view full-screen">
+        
+        <!-- Live Video Element (Hidden but active) and Visual Processing Canvas -->
+        <div class="camera-viewport">
+          <video id="video-feed" autoplay playsinline muted></video>
+          <canvas id="canvas-overlay"></canvas>
+          
+          <!-- Scanner Target / Reticle -->
+          <div class="scanner-reticle">
+            <div class="reticle-corner top-left"></div>
+            <div class="reticle-corner top-right"></div>
+            <div class="reticle-corner bottom-left"></div>
+            <div class="reticle-corner bottom-right"></div>
+            <div class="reticle-ping"></div>
+          </div>
+
+          <!-- Alert Flash Overlay -->
+          <div id="alert-flash" class="alert-flash-overlay"></div>
+        </div>
+
+        <!-- Floating HUD Header -->
+        <div class="hud-header">
+          <button id="btn-scanner-back" class="hud-btn" title="Back to Guide">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+              <line x1="19" y1="12" x2="5" y2="12"/>
+              <polyline points="12 19 5 12 12 5"/>
+            </svg>
+          </button>
+          <div class="hud-step-title">SCANNING: <span id="scanner-current-zone">CORNERS</span></div>
+          <div id="battery-saver-pill" class="hud-pill battery-saver-off">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+              <rect x="2" y="7" width="16" height="10" rx="2" ry="2"/>
+              <line x1="22" y1="11" x2="22" y2="13"/>
+            </svg>
+            <span>ECO OFF</span>
+          </div>
+        </div>
+
+        <!-- HUD Left Panel: Sensor Metrics -->
+        <div class="hud-metrics">
+          <div class="metric-item" id="hud-metric-prox">
+            <span class="metric-label">DISTANCE</span>
+            <span class="metric-value">1.4m</span>
+            <div class="metric-bar"><div class="metric-progress" style="width: 70%"></div></div>
+          </div>
+          <div class="metric-item highlight" id="hud-metric-anomaly">
+            <span class="metric-label">THREAT CHANCE</span>
+            <span class="metric-value">0%</span>
+            <div class="metric-bar"><div class="metric-progress threat-color" style="width: 0%"></div></div>
+          </div>
+
+          <!-- NEW: Signal Waveform -->
+          <div class="metric-item signal-analyzer">
+            <span class="metric-label">SIGNAL ANALYZER</span>
+            <canvas id="canvas-waveform"></canvas>
+          </div>
+
+          <div class="metric-item" id="hud-metric-hand">
+            <span class="metric-label">SPEED</span>
+            <span class="metric-value">STEADY</span>
+            <div class="metric-bar"><div class="metric-progress speed-color" style="width: 10%"></div></div>
+          </div>
+        </div>
+
+        <!-- HUD Right Panel: Quick Controls -->
+        <div class="hud-controls">
+          <button id="btn-toggle-audio" class="hud-icon-btn active" title="Toggle Sound Alarms">
+            <svg class="icon-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+            </svg>
+            <svg class="icon-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="display:none;">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+              <line x1="23" y1="9" x2="17" y2="15"/>
+              <line x1="17" y1="9" x2="23" y2="15"/>
+            </svg>
+          </button>
+          <button id="btn-toggle-flashlight" class="hud-icon-btn" title="Toggle Flashlight (Simulated)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+              <path d="M18 2h-4c-1.1 0-2 .9-2 2v6c0 1.1-.9 2-2 2H6a2 2 0 0 0-2 2v4c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+              <line x1="6" y1="6" x2="18" y2="6"/>
+              <line x1="12" y1="12" x2="12" y2="12.01"/>
+            </svg>
+          </button>
+          <button id="btn-toggle-eco" class="hud-icon-btn" title="Battery Eco Mode">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+              <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 3.5 1 8a7 7 0 0 1-9 10z"/>
+              <path d="M9 22v-4"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- HUD Bottom Bar: CV Filters Selector -->
+        <div class="hud-footer">
+          <div class="filter-carousel">
+            <button class="filter-tab active" data-filter="normal">NORMAL</button>
+            <button class="filter-tab" data-filter="edge">EDGE (LENS)</button>
+            <button class="filter-tab" data-filter="glint">GLINT FILTER</button>
+            <button class="filter-tab" data-filter="infrared">INFRARED</button>
+          </div>
+          
+          <div class="distance-manual-override">
+            <div class="slider-group">
+              <label for="slider-distance">Proximity:</label>
+              <input type="range" id="slider-distance" min="0.1" max="3.0" step="0.1" value="1.4">
+              <span id="slider-distance-val">1.4m</span>
+            </div>
+            <div class="slider-group">
+              <label for="slider-sensitivity">Sensitivity:</label>
+              <input type="range" id="slider-sensitivity" min="1" max="10" step="1" value="5">
+              <span id="slider-sensitivity-val">5</span>
+            </div>
+          </div>
+
+          <div class="scanner-actions">
+            <!-- Simulated sensor simulation click (so user can verify alarms/captures easily) -->
+            <button id="btn-simulate-threat" class="btn btn-secondary btn-sm">SIMULATE ANOMALY</button>
+            
+            <button id="btn-log-anomaly" class="btn btn-warning">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                <line x1="12" y1="9" x2="12" y2="13"/>
+                <line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+              <span>LOG SUSPECT</span>
+            </button>
+            
+            <button id="btn-next-step-scan" class="btn btn-primary">
+              <span>NEXT STEP</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                <polyline points="9 18 15 12 9 6"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- VIEW 4: SAFETY REPORT -->
+      <section id="view-report" class="app-view">
+        <div class="report-header">
+          <h2 class="report-title">Room Scan Summary</h2>
+          <p class="report-subtitle">Generated on-device at <span id="report-timestamp">12:30 PM</span></p>
+        </div>
+
+        <!-- Safety Circle Gauge -->
+        <div class="score-card">
+          <div class="gauge-outer">
+            <svg viewBox="0 0 100 100" class="gauge-svg">
+              <circle cx="50" cy="50" r="42" class="gauge-bg"/>
+              <circle cx="50" cy="50" r="42" class="gauge-fill" id="report-gauge-fill"/>
+            </svg>
+            <div class="gauge-text">
+              <span id="report-score" class="score-number">95</span>
+              <span class="score-denom">/100</span>
+              <span id="report-status-badge" class="status-badge safe">SECURE</span>
+            </div>
+          </div>
+          <p class="gauge-summary" id="report-verdict">No critical hidden cameras detected. The room appears secure, but caution is recommended.</p>
+        </div>
+
+        <!-- Zone Status Reports -->
+        <div class="zone-results">
+          <h3>Zone Analysis Details</h3>
+          
+          <div class="zone-row" id="report-zone-corners">
+            <div class="zone-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                <path d="M3 3h18v18H3zM21 3L3 21"/>
+              </svg>
+            </div>
+            <div class="zone-details">
+              <h4>Corners & Joints</h4>
+              <p class="zone-desc">Checked ceiling corners and wall borders.</p>
+            </div>
+            <div class="zone-badge safe">CLEAN</div>
+          </div>
+
+          <div class="zone-row" id="report-zone-mirrors">
+            <div class="zone-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <path d="M9 17l6-10"/>
+              </svg>
+            </div>
+            <div class="zone-details">
+              <h4>Mirrors & Glass</h4>
+              <p class="zone-desc">Checked reflection contrast and bezel depths.</p>
+            </div>
+            <div class="zone-badge safe">CLEAN</div>
+          </div>
+
+          <div class="zone-row" id="report-zone-bulbs">
+            <div class="zone-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/>
+                <line x1="9" y1="18" x2="15" y2="18"/>
+                <line x1="10" y1="22" x2="14" y2="22"/>
+              </svg>
+            </div>
+            <div class="zone-details">
+              <h4>Bulbs & Fixtures</h4>
+              <p class="zone-desc">Scanned light fixtures for hidden lens fittings.</p>
+            </div>
+            <div class="zone-badge safe">CLEAN</div>
+          </div>
+
+          <div class="zone-row" id="report-zone-objects">
+            <div class="zone-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                <rect x="2" y="2" width="20" height="8" rx="2"/>
+                <rect x="2" y="14" width="20" height="8" rx="2"/>
+              </svg>
+            </div>
+            <div class="zone-details">
+              <h4>Personal Objects</h4>
+              <p class="zone-desc">Checked electronic ports, USB chargers, clocks.</p>
+            </div>
+            <div class="zone-badge safe">CLEAN</div>
+          </div>
+        </div>
+
+        <!-- NEW: Logged Suspects Gallery -->
+        <div id="report-threat-gallery" class="threat-gallery" style="display:none;">
+          <h3>Logged Suspects</h3>
+          <div id="threat-logs-container" class="threat-logs-list">
+            <!-- Dynamic log items will be injected here -->
+          </div>
+        </div>
+
+        <!-- Actionable Countermeasures -->
+        <div class="security-guide">
+          <h3>Countermeasures & Safety Tips</h3>
+          <div class="tip-card">
+            <h5>1. Two-Way Mirror Test</h5>
+            <p>Place your fingernail against the mirror. If there is a gap between your nail and the reflection, it is a regular mirror. If your nail touches its reflection directly (no gap), it may be a two-way mirror. Verify by shining a bright light through it.</p>
+          </div>
+          <div class="tip-card">
+            <h5>2. Physical Coverage</h5>
+            <p>If you suspect an object (e.g., clocks, smoke detectors, decorative vases) contains a camera but cannot locate it, cover the suspicious lens opening with opaque tape or drape a cloth over the item.</p>
+          </div>
+          <div class="tip-card">
+            <h5>3. Low-Light Glint Searching</h5>
+            <p>Turn off all room lights, turn on your phone's flashlight, and look through the camera with the Glint filter. Camera lenses have highly reflective glass surfaces that act as retro-reflectors, flashing bright pinpoints back to you.</p>
+          </div>
+        </div>
+
+        <div class="report-footer">
+          <button id="btn-restart-sweep" class="btn btn-secondary">NEW SWEEP</button>
+          <button id="btn-share-report" class="btn btn-primary">EXPORT REPORT</button>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Loading State Indicator (Global HUD message overlay) -->
+  <div id="status-toast" class="status-toast">
+    <span id="toast-message">Camera stream active</span>
+  </div>
+
+  <!-- Audio Alert System Toggle Wrapper -->
+  <div style="display:none;">
+    <audio id="alert-sound-node"></audio>
+  </div>
+
+  <!-- Application JS Modules -->
+  <script src="audio.js"></script>
+  <script src="sensors.js"></script>
+  <script src="scanner.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
